@@ -62,72 +62,6 @@
       font-weight: 700;
     }
 
-    .flow {
-      margin: 4px 0 14px;
-      padding: 16px;
-      border-radius: 20px;
-      border: 1px solid rgba(115, 154, 214, 0.25);
-      background: linear-gradient(180deg, rgba(11, 18, 34, 0.92), rgba(8, 14, 27, 0.94));
-      box-shadow: var(--shadow);
-    }
-
-    .flow-title {
-      margin: 0 0 14px;
-      font-size: 1.08rem;
-      letter-spacing: 0.03em;
-      color: #cfe4ff;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .flow-track {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .flow-step {
-      min-height: 84px;
-      padding: 14px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(115, 154, 214, 0.22);
-      background: linear-gradient(180deg, rgba(18, 28, 52, 0.98), rgba(10, 17, 32, 0.98));
-      display: grid;
-      gap: 8px;
-      align-content: center;
-      text-align: center;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-    }
-
-    .flow-step .num {
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      color: var(--accent-2);
-    }
-
-    .flow-step .name {
-      font-size: 0.98rem;
-      font-weight: 800;
-      line-height: 1.25;
-      color: var(--text);
-    }
-
-    .flow-step .desc {
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.3;
-    }
-
-    .arrow {
-      color: var(--accent);
-      font-size: 1.5rem;
-      font-weight: 900;
-      text-align: center;
-      user-select: none;
-    }
-
     .layout {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
@@ -214,7 +148,6 @@
 
     .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
     .btn:active { transform: translateY(0); }
-
     .btn.blue { background: linear-gradient(180deg, #2f8bff, #1874df); }
     .btn.red { background: linear-gradient(180deg, #f05854, #d73a35); }
     .btn.green { background: linear-gradient(180deg, #27b75c, #129a49); }
@@ -342,6 +275,19 @@
       font-size: 1.02rem;
     }
 
+    .run-area {
+      display: flex;
+      justify-content: center;
+      margin: 14px 0 12px;
+    }
+
+    .run-area .btn {
+      min-width: min(100%, 360px);
+      justify-content: center;
+      font-size: 1.05rem;
+      padding: 14px 26px;
+    }
+
     .footer {
       margin-top: 12px;
       padding: 18px 20px;
@@ -365,15 +311,6 @@
 
       .left {
         min-height: auto;
-      }
-
-      .flow-track {
-        grid-template-columns: 1fr;
-      }
-
-      .arrow {
-        transform: rotate(90deg);
-        padding: 6px 0;
       }
     }
 
@@ -399,10 +336,6 @@
       .actions {
         width: 100%;
       }
-
-      .flow {
-        padding: 12px;
-      }
     }
   </style>
 </head>
@@ -410,48 +343,7 @@
   <div class="page">
     <div class="hero">
       <h1>Handwritten Character Recognition</h1>
-      <div class="subtitle">Enter any digit (0-9) or character (A-Z)</div>
-    </div>
-
-    <div class="flow">
-      <div class="flow-title">Pipeline Flow</div>
-      <div class="flow-track">
-        <div class="flow-step">
-          <div class="num">STEP 1</div>
-          <div class="name">Kaggle Dataset</div>
-          <div class="desc">Load EMNIST Balanced files from the archive</div>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="flow-step">
-          <div class="num">STEP 2</div>
-          <div class="name">Train Model</div>
-          <div class="desc">Use image pixels and labels for training</div>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="flow-step">
-          <div class="num">STEP 3</div>
-          <div class="name">Model Learns Patterns</div>
-          <div class="desc">Detect strokes, shapes, and character structure</div>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="flow-step">
-          <div class="num">STEP 4</div>
-          <div class="name">User Enters Image</div>
-          <div class="desc">Draw a digit or character on the canvas</div>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="flow-step">
-          <div class="num">STEP 5</div>
-          <div class="name">Model Predicts Result</div>
-          <div class="desc">Return the most likely class and confidence</div>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="flow-step">
-          <div class="num">STEP 6</div>
-          <div class="name">Output Shown on Screen</div>
-          <div class="desc">Display prediction and top-5 probabilities</div>
-        </div>
-      </div>
+      <div class="subtitle">Choose your own character, run the model, and see the result update in real time.</div>
     </div>
 
     <div class="layout">
@@ -474,15 +366,15 @@
         <section class="section">
           <h2>2. RECOGNITION RESULT</h2>
           <div class="result-box">
-            <p class="pred-letter">V</p>
+            <p class="pred-letter" id="predLetter">-</p>
             <div class="result-meta">
-              <div>Predicted Character: <strong>V</strong></div>
+              <div>Predicted Character: <strong id="predChar">-</strong></div>
             </div>
             <div class="divider"></div>
             <div class="result-meta">
               <div>Confidence:</div>
-              <div class="confidence">98.76%</div>
-              <div class="note">(Updates in real-time)</div>
+              <div class="confidence" id="confidenceValue">--</div>
+              <div class="note" id="predictionNote">(Draw a character and click Run Recognition)</div>
             </div>
           </div>
         </section>
@@ -491,43 +383,48 @@
           <h2>3. TOP 5 PREDICTIONS</h2>
           <div class="rows">
             <div class="row">
-              <div class="label">V</div>
-              <div class="bar-track"><div class="bar-fill" style="--w: 98.76%;"></div></div>
-              <div class="percent">98.76%</div>
+              <div class="label" id="top1Label">-</div>
+              <div class="bar-track"><div class="bar-fill" id="top1Bar" style="--w: 0%;"></div></div>
+              <div class="percent" id="top1Percent">--</div>
             </div>
             <div class="row">
-              <div class="label">Y</div>
-              <div class="bar-track"><div class="bar-fill" style="--w: 0.63%;"></div></div>
-              <div class="percent">0.63%</div>
+              <div class="label" id="top2Label">-</div>
+              <div class="bar-track"><div class="bar-fill" id="top2Bar" style="--w: 0%;"></div></div>
+              <div class="percent" id="top2Percent">--</div>
             </div>
             <div class="row">
-              <div class="label">U</div>
-              <div class="bar-track"><div class="bar-fill" style="--w: 0.28%;"></div></div>
-              <div class="percent">0.28%</div>
+              <div class="label" id="top3Label">-</div>
+              <div class="bar-track"><div class="bar-fill" id="top3Bar" style="--w: 0%;"></div></div>
+              <div class="percent" id="top3Percent">--</div>
             </div>
             <div class="row">
-              <div class="label">W</div>
-              <div class="bar-track"><div class="bar-fill" style="--w: 0.17%;"></div></div>
-              <div class="percent">0.17%</div>
+              <div class="label" id="top4Label">-</div>
+              <div class="bar-track"><div class="bar-fill" id="top4Bar" style="--w: 0%;"></div></div>
+              <div class="percent" id="top4Percent">--</div>
             </div>
             <div class="row">
-              <div class="label">X</div>
-              <div class="bar-track"><div class="bar-fill" style="--w: 0.16%;"></div></div>
-              <div class="percent">0.16%</div>
+              <div class="label" id="top5Label">-</div>
+              <div class="bar-track"><div class="bar-fill" id="top5Bar" style="--w: 0%;"></div></div>
+              <div class="percent" id="top5Percent">--</div>
             </div>
           </div>
         </section>
       </div>
     </div>
 
+    <div class="run-area">
+      <button class="btn green" id="runBtn" type="button">Run Recognition</button>
+    </div>
+
     <div class="footer">
-      Model: <span>CNN</span> &nbsp; | &nbsp; Dataset: <span>EMNIST (Balanced)</span> &nbsp; | &nbsp; Accuracy: <span>98.50%</span>
+      Model: <span id="modelName">Loading...</span> &nbsp; | &nbsp; Dataset: <span id="datasetName">EMNIST (Balanced)</span> &nbsp; | &nbsp; Accuracy: <span id="modelAccuracy">--</span>
     </div>
   </div>
 
   <script>
     const canvas = document.getElementById("drawCanvas");
     const ctx = canvas.getContext("2d");
+    const runBtn = document.getElementById("runBtn");
     let drawing = false;
 
     function fitCanvas() {
@@ -537,8 +434,6 @@
       ctx.strokeStyle = "#0b0b0b";
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      drawDemoV();
     }
 
     function getPoint(event) {
@@ -571,26 +466,81 @@
       ctx.beginPath();
     }
 
-    function drawDemoV() {
-      ctx.save();
-      ctx.strokeStyle = "#0a0a0a";
-      ctx.lineWidth = 28;
-      ctx.beginPath();
-      ctx.moveTo(160, 240);
-      ctx.lineTo(400, 640);
-      ctx.lineTo(640, 240);
-      ctx.stroke();
-      ctx.restore();
+    function resetResultPanel() {
+      document.getElementById("predLetter").textContent = "-";
+      document.getElementById("predChar").textContent = "-";
+      document.getElementById("confidenceValue").textContent = "--";
+      document.getElementById("predictionNote").textContent = "(Draw a character and click Run Recognition)";
+
+      for (let i = 1; i <= 5; i += 1) {
+        document.getElementById(`top${i}Label`).textContent = "-";
+        document.getElementById(`top${i}Percent`).textContent = "--";
+        const bar = document.getElementById(`top${i}Bar`);
+        bar.style.width = "0%";
+        bar.style.setProperty("--w", "0%");
+      }
     }
 
-    document.getElementById("clearBtn").addEventListener("click", () => {
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    });
+    function setTopPrediction(index, item) {
+      document.getElementById(`top${index}Label`).textContent = item.character;
+      document.getElementById(`top${index}Percent`).textContent = `${item.confidence.toFixed(2)}%`;
+      const bar = document.getElementById(`top${index}Bar`);
+      bar.style.width = `${item.confidence}%`;
+      bar.style.setProperty("--w", `${item.confidence}%`);
+    }
 
+    function updateResultPanel(data) {
+      document.getElementById("predLetter").textContent = data.predicted_character;
+      document.getElementById("predChar").textContent = data.predicted_character;
+      document.getElementById("confidenceValue").textContent = `${data.confidence.toFixed(2)}%`;
+      document.getElementById("predictionNote").textContent = "Live prediction from the EMNIST model";
+
+      data.top_predictions.slice(0, 5).forEach((item, index) => setTopPrediction(index + 1, item));
+
+      document.getElementById("modelName").textContent = data.metrics?.dataset ? "SGD Classifier" : "EMNIST";
+      document.getElementById("datasetName").textContent = data.metrics?.dataset || "EMNIST (Balanced)";
+      document.getElementById("modelAccuracy").textContent = data.metrics?.accuracy
+        ? `${(data.metrics.accuracy * 100).toFixed(2)}%`
+        : "--";
+    }
+
+    async function runRecognition() {
+      runBtn.disabled = true;
+      const originalText = runBtn.textContent;
+      runBtn.textContent = "Running...";
+
+      try {
+        const response = await fetch("/api/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image: canvas.toDataURL("image/png"),
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Prediction failed.");
+        }
+
+        updateResultPanel(data);
+      } catch (error) {
+        document.getElementById("predictionNote").textContent = error.message;
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = originalText;
+      }
+    }
+
+    document.getElementById("clearBtn").addEventListener("click", fitCanvas);
     document.getElementById("clearAllBtn").addEventListener("click", () => {
       fitCanvas();
+      resetResultPanel();
     });
+
+    runBtn.addEventListener("click", runRecognition);
 
     canvas.addEventListener("mousedown", startDraw);
     canvas.addEventListener("mousemove", draw);
@@ -600,6 +550,7 @@
     window.addEventListener("touchend", stopDraw);
 
     fitCanvas();
+    resetResultPanel();
   </script>
 </body>
 </html>

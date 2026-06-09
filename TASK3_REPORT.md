@@ -6,32 +6,31 @@
 
 ## Objective
 
-Recognize handwritten digits and letters using the EMNIST dataset and present the result in a prediction UI.
+Build a handwritten character recognition system using the EMNIST Balanced dataset and display the prediction in a web dashboard.
+
+## Approach
+
+1. Load the EMNIST Balanced CSV files from the Kaggle archive
+2. Decode labels using the EMNIST mapping file
+3. Normalize and orient the image pixels
+4. Train a multiclass classifier
+5. Serve predictions through a local Flask API
+6. Show the output on the web page with confidence and top-5 probabilities
 
 ## Dataset
 
-The Kaggle archive includes the EMNIST dataset files:
+- Training file: `emnist-balanced-train.csv`
+- Test file: `emnist-balanced-test.csv`
+- Label map: `emnist-balanced-mapping.txt`
 
-- `emnist-balanced-train.csv`
-- `emnist-balanced-test.csv`
-- `emnist-balanced-mapping.txt`
+## Output
 
-Additional EMNIST splits are also available:
+The page displays:
 
-- `emnist-byclass`
-- `emnist-bymerge`
-- `emnist-digits`
-- `emnist-letters`
-- `emnist-mnist`
-
-## Expected Output
-
-The output should match the handwritten recognition interface:
-
-- a drawing area for user input
-- the predicted character shown prominently
+- drawing canvas for a user-written character
+- predicted character
 - confidence percentage
-- top-5 predictions with bars or percentages
+- top-5 predictions
 
 ## Example Output
 
@@ -44,16 +43,17 @@ The output should match the handwritten recognition interface:
   - `W`
   - `X`
 
-## How the Output Should Look
+## How to Run
 
-The final dashboard should contain:
-
-1. A left panel for drawing input
-2. A right panel for the prediction result
-3. A top-5 predictions section
-4. A run button to trigger recognition
-5. A footer or summary line showing model and dataset details
+```powershell
+cd "C:\code alpha\codealpha_hand written character recognition"
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python -m src.train
+python -m src.server
+```
 
 ## Conclusion
 
-This task is focused on handwritten character recognition using EMNIST. The project output should be a clean, interactive demo that predicts the character and shows confidence in real time.
+This task connects the handwritten character recognition UI to the EMNIST dataset with a real prediction pipeline, so the page can return live results from the trained model.
