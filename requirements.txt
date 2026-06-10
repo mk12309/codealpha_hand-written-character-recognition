@@ -1,6 +1,6 @@
-flask>=3.0
-joblib>=1.3
-numpy>=1.24
-pandas>=2.0
-pillow>=10.0
-scikit-learn>=1.4
+torch
+torchvision
+numpy
+flask
+pillow
+scikit-learn

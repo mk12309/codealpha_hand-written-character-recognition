@@ -1,1 +1,0 @@
-"""Handwritten character recognition package."""
